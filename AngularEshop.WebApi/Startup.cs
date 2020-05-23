@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AngularEshop.Core.Utilities.Extensions.Connection;
+using AngularEshop.DataLayer.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,7 +38,12 @@ namespace AngularEshop.WebApi
                     .Build()
             );
 
+            #region Add DbContext
+
             services.AddApplicationDbContext(Configuration);
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            #endregion
 
 
             services.AddControllers();
