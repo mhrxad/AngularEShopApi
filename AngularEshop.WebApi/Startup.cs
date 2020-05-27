@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using AngularEshop.Core.Security;
 using AngularEshop.Core.Services.Implementations;
 using AngularEshop.Core.Services.Interfaces;
 using AngularEshop.Core.Utilities.Extensions.Connection;
 using AngularEshop.DataLayer.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace AngularEshop.WebApi
@@ -52,6 +56,42 @@ namespace AngularEshop.WebApi
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISliderService, SliderService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IPasswordHelper, PasswordHelper>();
+
+            #endregion
+
+            #region Authentication
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = "https://localhost:5001",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("AngularEshopJwtBearer"))
+                    };
+                });
+
+            #endregion
+
+            #region CORS
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("EnableCors", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .Build();
+                });
+            });
+
             #endregion
 
 
@@ -68,7 +108,13 @@ namespace AngularEshop.WebApi
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
+
             app.UseRouting();
+
+            app.UseCors("EnableCors");
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

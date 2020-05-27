@@ -1,17 +1,12 @@
-﻿using AngularEshop.DataLayer.Entities.Access;
-using AngularEshop.DataLayer.Entities.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace AngularEshop.DataLayer.Entities.Account
+namespace AngularEshop.Core.DTOs.Account
 {
-   public class User : BaseEntity
+    public class RegisterUserDTO
     {
-
-        #region properties
-
         [Display(Name = "ایمیل")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(100, ErrorMessage = "تعداد کاراکتر های {0} نمیتواند بیشتر از {1} باشد")]
@@ -21,6 +16,12 @@ namespace AngularEshop.DataLayer.Entities.Account
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(100, ErrorMessage = "تعداد کاراکتر های {0} نمیتواند بیشتر از {1} باشد")]
         public string Password { get; set; }
+
+        [Display(Name = "تکرار کلمه عبور")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [MaxLength(100, ErrorMessage = "تعداد کاراکتر های {0} نمیتواند بیشتر از {1} باشد")]
+        [Compare("Password", ErrorMessage = "کلمه های عبور مغایرت دارند")]
+        public string ConfirmPassword { get; set; }
 
         [Display(Name = "نام")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -36,21 +37,11 @@ namespace AngularEshop.DataLayer.Entities.Account
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(500, ErrorMessage = "تعداد کاراکتر های {0} نمیتواند بیشتر از {1} باشد")]
         public string Address { get; set; }
+    }
 
-        [MaxLength(100, ErrorMessage = "تعداد کاراکتر های {0} نمیتواند بیشتر از {1} باشد")]
-        public string EmailActiveCode { get; set; }
-
-        public bool IsActivated { get; set; }
-
-        #endregion
-
-        #region Relations
-
-        public ICollection<UserRole> UserRoles { get; set; }
-
-        #endregion
-
-
-
+    public enum RegisterUserResult
+    {
+        Success,
+        EmailExists
     }
 }
