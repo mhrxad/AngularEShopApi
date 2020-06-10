@@ -89,6 +89,11 @@ namespace AngularEshop.Core.Services.Implementations
             userRepository?.Dispose();
         }
 
+        public async Task<User> GetUserByUserId(long userId)
+        {
+            return await userRepository.GetEntityById(userId);
+        }
+
         #endregion
     }
 }

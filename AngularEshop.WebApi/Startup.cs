@@ -87,7 +87,6 @@ namespace AngularEshop.WebApi
                     builder.AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowCredentials()
                         .Build();
                 });
             });

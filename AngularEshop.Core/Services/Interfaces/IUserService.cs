@@ -15,5 +15,6 @@ namespace AngularEshop.Core.Services.Interfaces
         bool IsUserExistsByEmail(string email);
         Task<LoginUserResult> LoginUser(LoginUserDTO login);
         Task<User> GetUserByEmail(string email);
+        Task<User> GetUserByUserId(long userId);
     }
 }
