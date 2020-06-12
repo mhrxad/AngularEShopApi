@@ -4,14 +4,16 @@ using AngularEshop.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AngularEshop.DataLayer.Migrations
 {
     [DbContext(typeof(AngularEshopDbContext))]
-    partial class AngularEshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200612143641_UpdateProductCategory")]
+    partial class UpdateProductCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,8 +1,13 @@
-﻿using AngularEshop.Core.Services.Interfaces;
+﻿using AngularEshop.Core.DTOs.Paging;
+using AngularEshop.Core.DTOs.Producs;
+using AngularEshop.Core.Services.Interfaces;
+using AngularEshop.Core.Utilities.Paging;
 using AngularEshop.DataLayer.Entities.Product;
 using AngularEshop.DataLayer.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,6 +49,24 @@ namespace AngularEshop.Core.Services.Implementations
             await productRepository.SaveChanges();
         }
 
+        public async Task<FilterProdcutsDTO> FilterProducts(FilterProdcutsDTO filter)
+        {
+            var productsQuery = productRepository.GetEntitiesQuery().AsQueryable();
+
+            if (!string.IsNullOrEmpty(filter.Title))
+                productsQuery = productsQuery.Where(s => s.ProductName.Contains(filter.Title));
+
+            productsQuery = productsQuery.Where(s => s.Price >= filter.StartPrice && s.Price <= filter.EndPrice);
+
+            var count = (int)Math.Ceiling(productsQuery.Count() / (double)filter.TakeEntity);
+
+            var pager = Pager.Build(count, filter.PageId, filter.TakeEntity);
+
+            var products = await productsQuery.Paging(pager).ToListAsync();
+
+            return filter.SetProducts(products).SetPaging(pager);
+        }
+
         #endregion
 
 
@@ -57,6 +80,7 @@ namespace AngularEshop.Core.Services.Implementations
             productSelectedCategoryRepository?.Dispose();
             productVisitRepository?.Dispose();
         }
+
 
         #endregion
     }
