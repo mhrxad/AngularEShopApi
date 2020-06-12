@@ -20,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace AngularEshop.WebApi
@@ -96,6 +97,15 @@ namespace AngularEshop.WebApi
 
             #endregion
 
+            #region Swagger
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+            });
+
+            #endregion
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddControllers();
@@ -120,6 +130,14 @@ namespace AngularEshop.WebApi
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseSwagger();
+
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
