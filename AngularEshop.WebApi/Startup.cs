@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AngularEshop.Core.Security;
 using AngularEshop.Core.Services.Implementations;
 using AngularEshop.Core.Services.Interfaces;
+using AngularEshop.Core.Utilities.Convertors;
 using AngularEshop.Core.Utilities.Extensions.Connection;
 using AngularEshop.DataLayer.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -57,6 +58,8 @@ namespace AngularEshop.WebApi
             services.AddScoped<ISliderService, SliderService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IPasswordHelper, PasswordHelper>();
+            services.AddScoped<IMailSender, SendEmail>();
+            services.AddScoped<IViewRenderService, RenderViewToString>();
 
             #endregion
 
@@ -93,7 +96,8 @@ namespace AngularEshop.WebApi
 
             #endregion
 
-
+            services.AddControllersWithViews();
+            services.AddRazorPages();
             services.AddControllers();
         }
 
