@@ -58,6 +58,10 @@ namespace AngularEshop.Core.Services.Implementations
 
             productsQuery = productsQuery.Where(s => s.Price >= filter.StartPrice);
 
+            if (filter.Categories != null && filter.Categories.Any())
+                productsQuery = productsQuery.SelectMany(s =>
+                        s.ProductSelectedCategories.Where(f => filter.Categories.Contains(f.ProductCategoryId)).Select(t => t.Product));
+
             if (filter.EndPrice != 0)
                 productsQuery = productsQuery.Where(s => s.Price <= filter.EndPrice);
 
@@ -72,6 +76,14 @@ namespace AngularEshop.Core.Services.Implementations
 
         #endregion
 
+        #region product categories
+
+        public async Task<List<ProductCategory>> GetAllActiveProductCategories()
+        {
+            return await productCategoryRepository.GetEntitiesQuery().Where(s => !s.IsDelete).ToListAsync();
+        }
+
+        #endregion
 
         #region dispose
 

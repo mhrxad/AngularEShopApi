@@ -17,5 +17,12 @@ namespace AngularEshop.Core.Services.Interfaces
 
 
         #endregion
+
+        #region product categories
+
+        Task<List<ProductCategory>> GetAllActiveProductCategories();
+
+        #endregion
+
     }
 }

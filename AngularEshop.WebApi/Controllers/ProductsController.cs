@@ -35,5 +35,16 @@ namespace AngularEshop.WebApi.Controllers
         }
 
         #endregion
+
+        #region get products categories
+
+        [HttpGet("product-active-categories")]
+        public async Task<IActionResult> GetProductsCategories()
+        {
+            return JsonResponseStatus.Success(await productService.GetAllActiveProductCategories());
+        }
+
+        #endregion
+
     }
 }

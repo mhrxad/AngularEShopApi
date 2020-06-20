@@ -15,6 +15,7 @@ namespace AngularEshop.Core.DTOs.Producs
         public int EndPrice { get; set; }
 
         public List<Product> Products { get; set; }
+        public List<long> Categories { get; set; }
 
         public FilterProductsDTO SetPaging(BasePaging paging)
         {
