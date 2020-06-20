@@ -27,7 +27,7 @@ namespace AngularEshop.WebApi.Controllers
         #region products
 
         [HttpGet("filter-products")]
-        public async Task<IActionResult> GetProducts([FromQuery]FilterProdcutsDTO filter)
+        public async Task<IActionResult> GetProducts([FromQuery]FilterProductsDTO filter)
         {
             var products = await productService.FilterProducts(filter);
 

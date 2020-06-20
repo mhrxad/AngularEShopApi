@@ -13,7 +13,7 @@ namespace AngularEshop.Core.Services.Interfaces
 
         Task AddProduct(Product product);
         Task UpdateProduct(Product product);
-        Task<FilterProdcutsDTO> FilterProducts(FilterProdcutsDTO filter);
+        Task<FilterProductsDTO> FilterProducts(FilterProductsDTO filter);
 
 
         #endregion

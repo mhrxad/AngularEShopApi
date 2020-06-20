@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AngularEshop.Core.DTOs.Producs
 {
-    public class FilterProdcutsDTO : BasePaging
+    public class FilterProductsDTO : BasePaging
     {
         public string Title { get; set; }
 
@@ -16,7 +16,7 @@ namespace AngularEshop.Core.DTOs.Producs
 
         public List<Product> Products { get; set; }
 
-        public FilterProdcutsDTO SetPaging(BasePaging paging)
+        public FilterProductsDTO SetPaging(BasePaging paging)
         {
             this.PageId = paging.PageId;
             this.PageCount = paging.PageCount;
@@ -28,7 +28,7 @@ namespace AngularEshop.Core.DTOs.Producs
             return this;
         }
 
-        public FilterProdcutsDTO SetProducts(List<Product> products)
+        public FilterProductsDTO SetProducts(List<Product> products)
         {
             this.Products = products;
             return this;
