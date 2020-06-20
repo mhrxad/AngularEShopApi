@@ -53,6 +53,16 @@ namespace AngularEshop.Core.Services.Implementations
         {
             var productsQuery = productRepository.GetEntitiesQuery().AsQueryable();
 
+            switch (filter.OrderBy)
+            {
+                case ProductOrderBy.PriceAsc:
+                    productsQuery = productsQuery.OrderBy(s => s.Price);
+                    break;
+                case ProductOrderBy.PriceDec:
+                    productsQuery = productsQuery.OrderByDescending(s => s.Price);
+                    break;
+            }
+
             if (!string.IsNullOrEmpty(filter.Title))
                 productsQuery = productsQuery.Where(s => s.ProductName.Contains(filter.Title));
 

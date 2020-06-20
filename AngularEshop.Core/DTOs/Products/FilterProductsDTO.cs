@@ -16,6 +16,8 @@ namespace AngularEshop.Core.DTOs.Producs
 
         public List<Product> Products { get; set; }
         public List<long> Categories { get; set; }
+        public ProductOrderBy? OrderBy { get; set; }
+
 
         public FilterProductsDTO SetPaging(BasePaging paging)
         {
@@ -35,4 +37,11 @@ namespace AngularEshop.Core.DTOs.Producs
             return this;
         }
     }
+
+    public enum ProductOrderBy
+    {
+        PriceAsc,
+        PriceDec
+    }
+
 }
