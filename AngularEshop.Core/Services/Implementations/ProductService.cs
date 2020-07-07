@@ -90,6 +90,11 @@ namespace AngularEshop.Core.Services.Implementations
             return filter.SetProducts(products).SetPaging(pager);
         }
 
+        public async Task<Product> GetProductById(long productId)
+        {
+            return await productRepository.GetEntityById(productId);
+        }
+
         #endregion
 
         #region product categories

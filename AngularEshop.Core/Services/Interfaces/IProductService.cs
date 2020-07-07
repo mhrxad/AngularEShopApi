@@ -14,6 +14,8 @@ namespace AngularEshop.Core.Services.Interfaces
         Task AddProduct(Product product);
         Task UpdateProduct(Product product);
         Task<FilterProductsDTO> FilterProducts(FilterProductsDTO filter);
+        Task<Product> GetProductById(long productId);
+
 
 
         #endregion
