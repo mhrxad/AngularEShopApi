@@ -66,6 +66,12 @@ namespace AngularEshop.Core.Services.Implementations
             if (!string.IsNullOrEmpty(filter.Title))
                 productsQuery = productsQuery.Where(s => s.ProductName.Contains(filter.Title));
 
+            if (filter.StartPrice != 0)
+                productsQuery = productsQuery.Where(s => s.Price >= filter.StartPrice);
+
+            if (filter.EndPrice != 0)
+                productsQuery = productsQuery.Where(s => s.Price <= filter.EndPrice);
+
             productsQuery = productsQuery.Where(s => s.Price >= filter.StartPrice);
 
             if (filter.Categories != null && filter.Categories.Any())
