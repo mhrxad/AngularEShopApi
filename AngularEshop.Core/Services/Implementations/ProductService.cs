@@ -106,6 +106,25 @@ namespace AngularEshop.Core.Services.Implementations
 
         #endregion
 
+        #region products gallery
+
+        public async Task<List<ProductGallery>> GetProductActiveGalleries(long productId)
+        {
+            return await productGalleryRepository
+                .GetEntitiesQuery()
+                .Where(s => s.ProductId == productId && !s.IsDelete)
+                .Select(s => new ProductGallery
+                {
+                    ProductId = s.ProductId,
+                    Id = s.Id,
+                    ImageName = s.ImageName,
+                    CreateDate = s.CreateDate
+                }).ToListAsync();
+        }
+
+        #endregion
+
+
         #region dispose
 
         public void Dispose()

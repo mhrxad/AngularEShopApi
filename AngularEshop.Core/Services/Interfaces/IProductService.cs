@@ -26,5 +26,12 @@ namespace AngularEshop.Core.Services.Interfaces
 
         #endregion
 
+        #region proudct gallery
+
+        Task<List<ProductGallery>> GetProductActiveGalleries(long productId);
+
+        #endregion
+
+
     }
 }
