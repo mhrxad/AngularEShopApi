@@ -95,6 +95,25 @@ namespace AngularEshop.Core.Services.Implementations
             return await productRepository.GetEntityById(productId);
         }
 
+        public async Task<List<Product>> GetRelatedProducts(long productId)
+        {
+            var product = await productRepository.GetEntityById(productId);
+
+            if (product == null) return null;
+
+            var productCategoriesList = await productSelectedCategoryRepository.GetEntitiesQuery()
+                .Where(s => s.ProductId == productId).Select(f => f.ProductCategoryId).ToListAsync();
+
+            var relatedProducts = await productRepository
+                .GetEntitiesQuery()
+                .SelectMany(s => s.ProductSelectedCategories.Where(f => productCategoriesList.Contains(f.ProductCategoryId)).Select(t => t.Product))
+                .Where(s => s.Id != productId)
+                .OrderByDescending(s => s.CreateDate)
+                .Take(4).ToListAsync();
+
+            return relatedProducts;
+        }
+
         #endregion
 
         #region product categories
